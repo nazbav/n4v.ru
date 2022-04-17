@@ -16555,7 +16555,6 @@ a:active, a:hover {
 .header {
 background-image:url('../images/top.png');
 background-repeat:no-repeat;
-background-size:contain;
 background-position:center;
 }
 
