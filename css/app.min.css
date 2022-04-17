@@ -16552,7 +16552,7 @@ a:active, a:hover {
     opacity: .9
 }
 
-.header-info {
+.header {
 background-image:url('../images/top.png');
 background-repeat:no-repeat;
 background-size:contain;
