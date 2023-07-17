@@ -16433,7 +16433,6 @@ section .h3, section h3 {
     -ms-flex-pack: center;
     -ms-flex-direction: row;
     flex-direction: row;
-    justify-content: center
 }
 
 .header #name.h1, .header .header-info, .header h1#name {
