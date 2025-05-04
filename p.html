@@ -1,275 +1,488 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="ru">
 <head>
-
-	<meta charset="utf-8">
-	<!-- <base href="/"> -->
-
-	<title>Назым Бавбеков | Портфолио</title>
-
-	<meta name="viewport"
-				content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-	<link rel="icon" href="images/favicon.png">
-
-
-	<link rel="stylesheet" href="https://n4v.ru/css/app.min.css">
-	
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Назым Бавбеков | Портфолио</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="/images/favicon.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --mocha: #9A7B4F;
+            --primary: #3b82f6;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+        
+        .heading-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--mocha));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .portfolio-item {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(0) scale(1);
+            will-change: transform;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .cursor-dot {
+            width: 24px;
+            height: 24px;
+            background-color: var(--mocha);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            mix-blend-mode: multiply;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .cursor-outline {
+            width: 48px;
+            height: 48px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s ease-out;
+        }
+        
+        .image-filter {
+            filter: contrast(1.1) saturate(1.2) sepia(0.1) brightness(0.95);
+            transition: filter 0.5s ease;
+        }
+        
+        .image-filter:hover {
+            filter: contrast(1.2) saturate(1.3) sepia(0.2) brightness(1);
+        }
+        
+        .scroll-trigger {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .scroll-trigger.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .animate-float {
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+        
+        .handmade-border {
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h100v100H0z' fill='none'/%3E%3Cpath d='M20 20h60v60H20z' stroke='%239A7B4F' stroke-width='2' stroke-dasharray='8,4' fill='none'/%3E%3C/svg%3E");
+            background-size: 30px 30px;
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
 
+    <!-- Hero Section -->
+    <header class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 relative overflow-hidden flex items-center justify-center">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-black opacity-40"></div>
+            <div class="absolute inset-0 bg-[url('/images/background.jpg')] bg-cover bg-center image-filter"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center py-24">
+                <h1 class="text-6xl md:text-8xl font-bold text-white mb-6 heading-font">
+                    Назым <span class="gradient-text">Бавбеков</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-white opacity-90 max-w-3xl mx-auto mb-12">
+                    Веб-разработчик
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#portfolio" class="px-8 py-4 bg-white text-gray-900 font-medium rounded-full hover:bg-gray-100 transition duration-300 text-lg flex items-center">
+                        <span>Мои проекты</span>
+                        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </a>
+                    <a href="#contacts" class="px-8 py-4 border-2 border-white text-white font-medium rounded-full hover:bg-white hover:bg-opacity-10 transition duration-300 text-lg">
+                        Связаться
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </header>
 
-	
-<section class="container d-flex header">
-	<div class="header-info m-0 p-0">
-		<div class="">
-			<div class="d-flex">
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 scroll-trigger">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 heading-font">
+                    Мои <span class="gradient-text">навыки</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Опыт работы с 2018 года по <span id="current-year">2025</span>
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200 hover:border-gray-300 transition duration-300 scroll-trigger">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">PHP</h3>
+                    <p class="text-gray-600">Yii2, WordPress, Moodle, VK/TG chatbots</p>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200 hover:border-gray-300 transition duration-300 scroll-trigger">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Базы данных и очереди</h3>
+                    <p class="text-gray-600">MySQL, PostgreSQL, Redis, RabbitMQ</p>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200 hover:border-gray-300 transition duration-300 scroll-trigger">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Frontend</h3>
+                    <p class="text-gray-600">Bootstrap (3, 4), Pure JS/jQuery, React.js</p>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200 hover:border-gray-300 transition duration-300 scroll-trigger">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Веб-дизайн</h3>
+                    <p class="text-gray-600">Figma</p>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200 hover:border-gray-300 transition duration-300 scroll-trigger">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Интеграции с CRM</h3>
+                    <p class="text-gray-600">AmoCRM, Bitrix24</p>
+                </div>
+            </div>
+        </section>
 
-				<img src="images/Profile.png" alt="" style="min-width: 130pxmax-height: 130px;" class="">
-				<div class="d-flex flex-column m-2">
-					<h1 style="font-size: 3rem;line-height: 2rem;" id="name">НАЗЫМ БАВБЕКОВ</h1>
-					<p  style="font-size: 1rem" id="status">ВЕБ-РАЗРАБОТЧИК</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 scroll-trigger">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 heading-font">
+                    <span class="gradient-text">Мои</span> проекты
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Примеры моих работ
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <a href="https://github.com/nazbav/n4v.ru/tree/master/images/dist/academicol" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/academicol_ru.png" alt="Academicol Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">WordPress</span>
+                            <h3 class="text-2xl font-bold text-white">Сайт academicol.ru (дизайн + верстка)</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://volbi.ru/" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/volbi.png" alt="Volbi Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">WordPress</span>
+                            <h3 class="text-2xl font-bold text-white">Сайт volbi.ru (подключение)</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.figma.com/proto/q4bqYW77mJ32OrObaHI3zQ/sunduk?page-id=0%3A1&node-id=2%3A4" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/sndk.png" alt="Sunduk Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">Figma</span>
+                            <h3 class="text-2xl font-bold text-white">Дизайн сайта магазина СУНДУК</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.figma.com/file/OEMPrk3S862AgvwnRP90N7/lk.mapk34.ru?node-id=0%3A1" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/mapk.png" alt="MAPK Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">Figma, Moodle</span>
+                            <h3 class="text-2xl font-bold text-white">Дизайн и верстка ЛК АНО ДПО МАПК</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://academicol.github.io/lk/" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/lk_academicol_ru.png" alt="Academicol LK Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">Yii2, Figma</span>
+                            <h3 class="text-2xl font-bold text-white">Личный кабинет студента АНПОО АК</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://sdo.academicol.ru/" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/sdo_academicol_ru.png" alt="SDO Academicol Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">Figma, Moodle</span>
+                            <h3 class="text-2xl font-bold text-white">Дизайн главной страницы ДО АНПОО АК</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://t.me/fpic_notify_bot" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/fpic_notify_bot.png" alt="FPIC Bot Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">PHP</span>
+                            <h3 class="text-2xl font-bold text-white">Чат-бот для расписания</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://m.vk.com/studkvant" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/kvant.png" alt="Kvant Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">PHP</span>
+                            <h3 class="text-2xl font-bold text-white">Чат-боты для сообщества КВАНТ</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="http://e-new.volbi.ru/" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/e-new.volbi.ru.png" alt="Volbi EIOS Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">Figma, Moodle</span>
+                            <h3 class="text-2xl font-bold text-white">Дизайн ЭИОС АНО ВО ВИБ</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.figma.com/file/DV3VYvaZlQhh84HgxyIHAw/opd.mapk34.ru-(Copy)?node-id=0%3A1" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/molodoj.png" alt="Molodoj Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">Figma, Moodle</span>
+                            <h3 class="text-2xl font-bold text-white">Дизайн для конкурса молодежи</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/nazbav/botsapper" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/sapper.png" alt="Sapper Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">PHP</span>
+                            <h3 class="text-2xl font-bold text-white">Игра Сапер ВКонтакте</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/nazbav/vk-coin-api" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/vkcoinlib.png" alt="VK Coin API Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">PHP</span>
+                            <h3 class="text-2xl font-bold text-white">PHP SDK для VK Coin</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/nazbav/bot2018" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/bot2018.png" alt="Bot2018 Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">PHP</span>
+                            <h3 class="text-2xl font-bold text-white">Шаблон для чат-ботов ВКонтакте</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://nazbav.github.io/konk/" class="portfolio-item group relative overflow-hidden rounded-3xl bg-white shadow-lg card-3d scroll-trigger">
+                    <div class="relative pt-[70%] overflow-hidden">
+                        <img src="/images/dist/personalsite.png" alt="Personal Site Project" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 image-filter">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full">
+                            <span class="inline-block px-3 py-1 bg-white text-gray-900 rounded-full text-sm font-medium mb-2">HTML</span>
+                            <h3 class="text-2xl font-bold text-white">Сайт для конкурса</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
 
+    <!-- Contact Section -->
+    <section id="contacts" class="py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 scroll-trigger">
+                <h2 class="text-4xl font-bold text-white mb-4 heading-font">
+                    Связаться <span class="gradient-text">со мной</span>
+                </h2>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                    <a href="https://t.me/nazbav" class="contact-card bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition duration-300 flex items-center scroll-trigger">
+                        <div class="bg-white/20 p-4 rounded-lg mr-6">
+                            <i class="fab fa-telegram text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white mb-1">Telegram</h3>
+                            <p class="text-gray-300">@nazbav</p>
+                        </div>
+                    </a>
+                    <a href="mailto:naz.bav@list.ru" class="contact-card bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition duration-300 flex items-center scroll-trigger">
+                        <div class="bg-white/20 p-4 rounded-lg mr-6">
+                            <i class="fas fa-envelope text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white mb-1">Email</h3>
+                            <p class="text-gray-300">naz.bav@list.ru</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="skill" class="container contacts">
-	<h2>Опыт работы (2018-<span id="year">1 </span>)</h2>
-	<div class="row justify-content-between">
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="mb-6 md:mb-0">
+                    <h2 class="text-3xl font-bold gradient-text heading-font">Назым Бавбеков</h2>
+                    <p class="text-gray-400 mt-2">Веб-разработка с 2018 года</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://t.me/nazbav" class="text-gray-400 hover:text-amber-400 transition duration-300 text-xl">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="mailto:naz.bav@list.ru" class="text-gray-400 hover:text-amber-400 transition duration-300 text-xl">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© <span id="footer-year">2025</span> Все права защищены</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Политика конфиденциальности</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-			<div class="contact-item">
-				<div class="pt-4 pb-4 d-flex align-items-center">
-					
-					<div class="d-inline-block contact-item-text">
-						<p class="sub p-0 m-0">PHP</p>
-						<h3 class="p-0 m-0">YII2, WordPress, Moodle, VK/TG chatbots</h3>
-					</div>
-				</div>
-			</div>
-		
-
-			<div class="contact-item">
-				<div class="pt-4 pb-4 d-flex align-items-center">
-					
-					<div class="d-inline-block contact-item-text">
-						<p class="sub p-0 m-0">DB and queue</p>
-						<h3 class="p-0 m-0">MySQL, Postgress, Redis, RabbitMQ</h3>
-					</div>
-				</div>
-			</div>
-		
-			<div class="contact-item">
-				<div class="pt-4 pb-4 d-flex align-items-center">
-					
-					<div class="d-inline-block contact-item-text">
-						<p class="sub p-0 m-0">Front</p>
-						<h3 class="p-0 m-0">Bootstrap (3, 4), Pure JS/JQ, React.js</h3>
-					</div>
-				</div>
-			</div>
-
-			<div class="contact-item">
-				<div class="pt-4 pb-4 d-flex align-items-center">
-					
-					<div class="d-inline-block contact-item-text">
-						<p class="sub p-0 m-0">Web-design</p>
-						<h3 class="p-0 m-0">Figma</h3>
-					</div>
-				</div>
-			</div>
-
-
-			<div class="contact-item">
-				<div class="pt-4 pb-4 d-flex align-items-center">
-					
-					<div class="d-inline-block contact-item-text">
-						<p class="sub p-0 m-0">CRM-integrations</p>
-						<h3 class="p-0 m-0">AmoCRM, Bitrix24</h3>
-					</div>
-				</div>
-			</div>
-
-
-	</div>
-</section>
-
-<script>
-window.onload = function() { document.getElementById('year').innerHTML = new Date().getFullYear();}
-</script>
-
-
-<section class="container portfolio">
-	<h2>Портфолио</h2>
-	<div class="row">
-
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item" href="https://github.com/nazbav/n4v.ru/tree/master/images/dist/academicol"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/academicol_ru.png');background-repeat: no-repeat;background-size: cover;">
-
-				<div class="item-caption">2023 | WP | Сайт academicol.ru подключ (дизайн + верстка, подключ)</div>
-			</a>
-		</div>
-
-		
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item" href="https://volbi.ru/"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/volbi.png');background-repeat: no-repeat;background-size: cover;">
-
-				<div class="item-caption">2022 | WP | Сайт volbi.ru подключ (дизайн сторонний)</div>
-			</a>
-		</div>
-		
-		
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item" href="https://www.figma.com/proto/q4bqYW77mJ32OrObaHI3zQ/sunduk?page-id=0%3A1&node-id=2%3A4"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/sndk.png');background-repeat: no-repeat;background-size: cover;">
-
-				<div class="item-caption">2022 | FIG | Дизайн сайта магазина СУНДУК</div>
-			</a>
-		</div>
-		
-		
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item" href="https://www.figma.com/file/OEMPrk3S862AgvwnRP90N7/lk.mapk34.ru?node-id=0%3A1"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/mapk.png');background-repeat: no-repeat;background-size: cover;">
-
-				<div class="item-caption">2022 | FIG | MOODLE | Дизайн и верстка ЛК АНО ДПО МАПК</div>
-			</a>
-		</div>
-		
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item" href="https://academicol.github.io/lk/"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/lk_academicol_ru.png');background-repeat: no-repeat;background-size: cover;">
-
-				<div class="item-caption">2021 | FIG | YII2 | Личный кабинет студента АНПОО АК</div>
-			</a>
-		</div>
-
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item" href="https://sdo.academicol.ru/"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/sdo_academicol_ru.png');background-repeat: no-repeat;background-size: cover;">
-				<div class="item-caption">2021 | FIG | MOODLE | Дизайн и верстка главной страницы сайта ДО АНПОО АК</div>
-			</a>
-		</div>
-
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item" href="https://t.me/fpic_notify_bot"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/fpic_notify_bot.png');background-repeat: no-repeat;background-size: cover;">
-
-				<div class="item-caption">2021 | PHP | Чат-бот для просмотра расписания | ПОД КЛЮЧ</div>
-			</a>
-		</div>
-
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item" href="https://m.vk.com/studkvant"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/kvant.png');background-repeat: no-repeat;background-size: cover;">
-
-				<div class="item-caption">2020 | PHP | Система чат-ботов для сообщества "КВАНТ | Помощь студентам" | ПОД КЛЮЧ</div>
-			</a>
-		</div>
-
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item" href="http://e-new.volbi.ru/"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/e-new.volbi.ru.png');background-repeat: no-repeat;background-size: cover;">
-
-				<div class="item-caption">2020 | FIG | MOODLE | Дизайн и верстка главной страницы ЭИОС АНО ВО ВИБ | ПОД КЛЮЧ</div>
-			</a>
-		</div>
-
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item"
-				 href="https://www.figma.com/file/DV3VYvaZlQhh84HgxyIHAw/opd.mapk34.ru-(Copy)?node-id=0%3A1"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/molodoj.png');background-repeat: no-repeat;background-size: cover;">
-
-				<div class="item-caption">2020 | FIG | MOODLE | Дизайн верска, главной страницы для конкурса Молодежи (ЗАВЕРШЕН) | ПОД КЛЮЧ</div>
-			</a>
-		</div>
-
-
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item" href="https://github.com/nazbav/botsapper"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/sapper.png');background-repeat: no-repeat;background-size: cover;">
-
-				<div class="item-caption">2019 | PHP | Игра "Сапер" на клавиатуре ВКонтакте (+VK COIN) (АРХИВ) | ПОД КЛЮЧ</div>
-			</a>
-		</div>
-
-
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item" href="https://github.com/nazbav/vk-coin-api"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/vkcoinlib.png');background-repeat: no-repeat;background-size: cover;">
-
-				<div class="item-caption">2019 | PHP | PHP SDK* Для работы с VK COIN (АРХИВ)</div>
-			</a>
-		</div>
-
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item" href="https://github.com/nazbav/bot2018"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/bot2018.png');background-repeat: no-repeat;background-size: cover;">
-
-				<div class="item-caption">2018 | PHP | Шаблон для создания чат-ботов Вконтакте (АРХИВ)</div>
-			</a>
-		</div>
-
-
-		<div class="col-12 col-md-6 col-lg-3">
-			<a class="portfolio-item" href="https://nazbav.github.io/konk/"
-				 style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/dist/personalsite.png');background-repeat: no-repeat;background-size: cover;">
-				<div class="item-caption">2018 | HTML | Сайт-презентация "МОЯ ПРОФЕССИОНАЛЬНАЯ КАРЬЕРА — ПРОГРАММИСТ" для регионального
-					конкурса (АРХИВ)
-				</div>
-			</a>
-		</div>
-
-	</div>
-</section>
-
-
-<section id="contacts" class="container contacts">
-	<h2>Контакты</h2>
-	<div class="row justify-content-between">
-
-		<a class="col-12 col-lg-6 text-decoration-none" href="https://t.me/nazbav">
-			<div class="contact-item">
-				<div class="pt-4 pb-4 d-flex align-items-center">
-					<svg width="25" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="telegram"
-							 class="svg-inline--fa fa-telegram" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
-						<path fill="#000"
-									d="M248 8C111 8 0 119 0 256S111 504 248 504 496 392.1 496 256 384.1 8 248 8zM362.1 176.7c-3.732 39.22-19.88 134.4-28.1 178.3-3.476 18.58-10.32 24.82-16.95 25.42-14.4 1.326-25.34-9.517-39.29-18.66-21.83-14.31-34.16-23.22-55.35-37.18-24.49-16.14-8.612-25 5.342-39.5 3.652-3.793 67.11-61.51 68.33-66.75 .153-.655 .3-3.1-1.154-4.384s-3.59-.849-5.135-.5q-3.283 .746-104.6 69.14-14.85 10.19-26.89 9.934c-8.855-.191-25.89-5.006-38.55-9.123-15.53-5.048-27.88-7.717-26.8-16.29q.84-6.7 18.45-13.7 108.4-47.25 144.6-62.3c68.87-28.65 83.18-33.62 92.51-33.79 2.052-.034 6.639 .474 9.61 2.885a10.45 10.45 0 0 1 3.53 6.716A43.76 43.76 0 0 1 362.1 176.7z"></path>
-					</svg>
-					<div class="d-inline-block contact-item-text">
-						<p class="sub p-0 m-0">Telegram-аккаунт</p>
-						<h3 class="p-0 m-0">@nazbav</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-		
-		<a class="col-12 col-lg-6 text-decoration-none" href="mailto:naz.bav@list.ru">
-			<div class="contact-item">
-				<div class="pt-4 pb-4 d-flex align-items-center">
-					<svg width="25" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="at"
-							 class="svg-inline--fa fa-at"
-							 role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-						<path fill="#000"
-									d="M207.8 20.73c-93.45 18.32-168.7 93.66-187 187.1c-27.64 140.9 68.65 266.2 199.1 285.1c19.01 2.888 36.17-12.26 36.17-31.49l.0001-.6631c0-15.74-11.44-28.88-26.84-31.24c-84.35-12.98-149.2-86.13-149.2-174.2c0-102.9 88.61-185.5 193.4-175.4c91.54 8.869 158.6 91.25 158.6 183.2l0 16.16c0 22.09-17.94 40.05-40 40.05s-40.01-17.96-40.01-40.05v-120.1c0-8.847-7.161-16.02-16.01-16.02l-31.98 .0036c-7.299 0-13.2 4.992-15.12 11.68c-24.85-12.15-54.24-16.38-86.06-5.106c-38.75 13.73-68.12 48.91-73.72 89.64c-9.483 69.01 43.81 128 110.9 128c26.44 0 50.43-9.544 69.59-24.88c24 31.3 65.23 48.69 109.4 37.49C465.2 369.3 496 324.1 495.1 277.2V256.3C495.1 107.1 361.2-9.332 207.8 20.73zM239.1 304.3c-26.47 0-48-21.56-48-48.05s21.53-48.05 48-48.05s48 21.56 48 48.05S266.5 304.3 239.1 304.3z"></path>
-					</svg>
-					<div class="d-inline-block contact-item-text">
-						<p class="sub p-0 m-0">Электронная почта</p>
-						<h3 class="p-0 m-0">naz.bav@list.ru</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-
-	</div>
-</section>
-
-	<script src="https://n4v.ru/js/app.min.js"></script>
+    <script>
+        // Custom cursor
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorOutline = document.querySelector(".cursor-outline");
+        
+        window.addEventListener("mousemove", (e) => {
+            cursorDot.style.left = `${e.clientX}px`;
+            cursorDot.style.top = `${e.clientY}px`;
+            
+            cursorOutline.style.left = `${e.clientX}px`;
+            cursorOutline.style.top = `${e.clientY}px`;
+            cursorOutline.animate({
+                left: `${e.clientX}px`,
+                top: `${e.clientY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+        
+        // Hover effects for cursor
+        document.querySelectorAll("a, button, .portfolio-item").forEach(el => {
+            el.addEventListener("mouseenter", () => {
+                cursorDot.style.transform = "translate(-50%, -50%) scale(1.5)";
+                cursorDot.style.backgroundColor = "#3b82f6";
+                cursorOutline.style.transform = "translate(-50%, -50%) scale(1.5)";
+            });
+            
+            el.addEventListener("mouseleave", () => {
+                cursorDot.style.transform = "translate(-50%, -50%) scale(1)";
+                cursorDot.style.backgroundColor = "#9A7B4F";
+                cursorOutline.style.transform = "translate(-50%, -50%) scale(1)";
+            });
+        });
+        
+        // Scroll trigger animation
+        const scrollTriggers = document.querySelectorAll(".scroll-trigger");
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        scrollTriggers.forEach(trigger => {
+            observer.observe(trigger);
+        });
+        
+        // Set current year
+        const year = new Date().getFullYear();
+        document.getElementById("current-year").textContent = year;
+        document.getElementById("footer-year").textContent = year;
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
