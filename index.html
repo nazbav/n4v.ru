@@ -2,188 +2,757 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>N4V | Назым Бавбеков</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Назым Бавбеков | Портфолио</title>
+    <meta name="description" content="Портфолио Назыма Бавбекова — веб-разработчик PHP/Yii2/WordPress. Проекты, навыки, опыт.">
     <link rel="icon" href="/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/app.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+    /* ═══ Специфика портфолио ═══════════════════════════════════════ */
 
-        :root {
-            --mocha: #9A7B4F;
-            --primary: #3b82f6;
-        }
+    /* Отступ под фиксированный навбар убран */
+    .блок-герой { padding-top: 0; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #1e3a8a 100%);
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
+    /* ── Герой ── */
+    .герой {
+        min-height: 100svh; display: flex; align-items: center;
+        position: relative; overflow: hidden;
+    }
+    .герой__контент { position: relative; z-index: 1; width: 100%; text-align: center; }
+    .герой__имя { font-size: clamp(2.4rem, 7vw, 4.8rem); font-weight: 800; letter-spacing: -.04em; margin-bottom: .75rem; }
+    .герой__роль { font-size: clamp(.95rem, 2.5vw, 1.15rem); color: var(--цвет-приглушен); margin-bottom: 2.25rem; }
+    .герой__кнопки { display: flex; flex-wrap: wrap; gap: .65rem; justify-content: center; }
+    .герой__контакты { display: flex; flex-wrap: wrap; gap: 1.25rem; justify-content: center; margin-top: 1.75rem; }
+    .герой__контакт { display: flex; align-items: center; gap: .45rem; font-size: .9rem; color: var(--цвет-приглушен); text-decoration: none; transition: color .2s; }
+    .герой__контакт:hover { color: var(--цвет-акцент); }
+    .герой__статистика { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--цвет-граница); }
+    .стат-ячейка { text-align: center; padding: .75rem 1.25rem; background: rgba(255,255,255,.03); border: 1px solid var(--цвет-граница); border-radius: var(--радиус); min-width: 90px; }
+    .стат-ячейка__число { font-family: var(--шрифт-заг); font-size: 1.5rem; font-weight: 700; line-height: 1; margin-bottom: .15rem; }
+    .стат-ячейка__подпись { font-size: .72rem; color: var(--цвет-приглушен); }
+    .аватар { width: 96px; height: 96px; border-radius: 50%; border: 2px solid rgba(99,102,241,.35); overflow: hidden; margin: 0 auto 1.5rem; background: var(--цвет-карточка); }
+    .аватар img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .стек-строка { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; margin-bottom: 1.5rem; }
+    .стрелка-вниз {
+        position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+        color: rgba(148,163,184,.35); font-size: .8rem;
+        animation: покачивание 2.2s ease-in-out infinite;
+        pointer-events: none;
+    }
+    @keyframes покачивание {
+        0%,100% { transform: translateX(-50%) translateY(0); }
+        50%      { transform: translateX(-50%) translateY(7px); }
+    }
 
-        .heading-font {
-            font-family: 'Space Grotesk', sans-serif;
-        }
+    /* ── Обо мне ── */
+    .о-себе-карточки { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+    .о-себе-карточка { padding: 1.25rem; display: flex; gap: .85rem; align-items: flex-start; }
+    .о-себе-карточка h4 { font-size: .9rem; font-weight: 600; margin-bottom: .25rem; }
+    .о-себе-карточка p  { font-size: .8rem; color: var(--цвет-приглушен); line-height: 1.55; }
 
-        .cursor-dot {
-            width: 16px;
-            height: 16px;
-            background-color: var(--mocha);
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            mix-blend-mode: multiply;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-        }
+    /* ── Навыки (древо) ── */
+    .навыки-сетка { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .навык-карточка { padding: 1.25rem 1.4rem; }
+    .навык-карточка__шапка { display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem; }
+    .навык-карточка h3 { font-size: .95rem; font-weight: 600; }
+    .навык-карточка__суб { font-size: .78rem; color: var(--цвет-приглушен); margin-bottom: .6rem; }
+    .навык-теги { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
+    .навык-теги span {
+        font-size: .68rem; padding: .18rem .5rem; border-radius: 4px;
+        background: rgba(255,255,255,.06); color: var(--цвет-приглушен); border: 1px solid var(--цвет-граница);
+    }
 
-        .cursor-outline {
-            width: 32px;
-            height: 32px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9998;
-            transition: all 0.3s ease-out;
-        }
+    /* ── Хронология ── */
+    .хронология { position: relative; padding-left: 2rem; }
+    .хронология::before {
+        content: ''; position: absolute; left: 0; top: 6px; bottom: 6px;
+        width: 2px; background: linear-gradient(to bottom, var(--цвет-акцент), transparent);
+    }
+    .хрон-элемент { position: relative; margin-bottom: 2.25rem; }
+    .хрон-элемент:last-child { margin-bottom: 0; }
+    .хрон-точка {
+        position: absolute; left: -2.45rem; top: 5px;
+        width: 12px; height: 12px; border-radius: 50%;
+        background: var(--цвет-акцент); border: 2px solid var(--цвет-фон);
+        box-shadow: 0 0 8px rgba(99,102,241,.5);
+    }
+    .хрон-период { font-size: .72rem; color: var(--цвет-приглушен); font-weight: 500; margin-bottom: .2rem; }
+    .хрон-должность { font-family: var(--шрифт-заг); font-size: 1rem; font-weight: 700; margin-bottom: .1rem; }
+    .хрон-организация { font-size: .82rem; color: var(--цвет-тёплый); margin-bottom: .4rem; }
+    .хрон-описание { font-size: .85rem; color: var(--цвет-приглушен); line-height: 1.65; }
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
+    /* ── Проекты ── */
+    .фильтр-группа { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 2rem; }
+    .фильтр-кнопка {
+        border: 1px solid var(--цвет-граница); background: rgba(255,255,255,.04);
+        color: var(--цвет-приглушен); border-radius: 999px;
+        padding: .35rem .9rem; font-size: .78rem; font-weight: 500;
+        cursor: pointer; transition: all .18s; font-family: var(--шрифт-осн);
+    }
+    .фильтр-кнопка:hover, .фильтр-кнопка.актив { background: var(--цвет-акцент); color: #fff; border-color: var(--цвет-акцент); }
+    .проекты-сетка { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.1rem; }
+    .проект-карточка { cursor: pointer; }
+    .проект-превью { position: relative; padding-top: 60%; overflow: hidden; border-radius: var(--радиус) var(--радиус) 0 0; }
+    .проект-превью img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .проект-карточка:hover .проект-превью img { transform: scale(1.07); }
+    .проект-затемн { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.55), transparent 55%); }
+    .проект-тело { padding: 1.1rem 1.25rem 1.2rem; }
+    .проект-тело h3 { font-family: var(--шрифт-заг); font-size: .95rem; font-weight: 600; line-height: 1.4; color: var(--цвет-текст); margin: .4rem 0 .35rem; }
+    .проект-мета { display: flex; align-items: center; justify-content: space-between; margin-top: .5rem; }
+    .проект-стрелка { font-size: .73rem; color: var(--цвет-акцент); display: inline-flex; align-items: center; gap: .25rem; transition: gap .18s; }
+    .проект-карточка:hover .проект-стрелка { gap: .45rem; }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    /* ── Модальное окно кейса ── */
+    .модал-оверлей {
+        position: fixed; inset: 0; z-index: 400;
+        background: rgba(0,0,0,.75); backdrop-filter: blur(8px);
+        display: flex; align-items: flex-end; justify-content: center;
+        opacity: 0; pointer-events: none;
+        transition: opacity .25s;
+        padding: 0;
+    }
+    @media (min-width: 640px) {
+        .модал-оверлей { align-items: center; padding: 1.5rem; }
+    }
+    .модал-оверлей.открыто { opacity: 1; pointer-events: all; }
+    .модал {
+        background: var(--цвет-карточка); border: 1px solid rgba(255,255,255,.09);
+        border-radius: var(--радиус-бол) var(--радиус-бол) 0 0;
+        width: 100%; max-width: 680px; max-height: 92svh;
+        overflow-y: auto; transform: translateY(40px);
+        transition: transform .3s cubic-bezier(.25,1,.5,1);
+        position: relative;
+    }
+    @media (min-width: 640px) {
+        .модал { border-radius: var(--радиус-бол); max-height: 85svh; transform: translateY(20px) scale(.97); }
+    }
+    .модал-оверлей.открыто .модал { transform: none; }
+    .модал__изображение { width: 100%; height: 220px; object-fit: cover; display: block; }
+    @media (min-width: 640px) { .модал__изображение { height: 260px; border-radius: var(--радиус-бол) var(--радиус-бол) 0 0; } }
+    .модал__тело { padding: 1.5rem 1.5rem 2rem; }
+    .модал__закрыть {
+        position: sticky; top: 0; float: right; margin: -1.5rem -1.5rem 0 0;
+        width: 36px; height: 36px; border-radius: 50%;
+        background: rgba(255,255,255,.1); border: none; cursor: pointer;
+        color: var(--цвет-текст); font-size: .85rem;
+        display: flex; align-items: center; justify-content: center;
+        z-index: 1; transition: background .2s;
+    }
+    .модал__закрыть:hover { background: rgba(255,255,255,.18); }
+    .модал__теги { display: flex; flex-wrap: wrap; gap: .4rem; margin: .75rem 0 1rem; }
+    .модал__раздел { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--цвет-приглушен); margin-bottom: .4rem; margin-top: 1.1rem; }
+    .модал__текст { font-size: .875rem; color: var(--цвет-суб); line-height: 1.75; }
+    .результат-строка { display: flex; gap: .55rem; align-items: flex-start; margin-bottom: .35rem; }
+    .результат-строка i { color: var(--цвет-зелён); font-size: .75rem; margin-top: 3px; flex-shrink: 0; }
+    .результат-строка span { font-size: .85rem; color: var(--цвет-суб); }
+    .модал__действия { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--цвет-граница); }
 
-        .button {
-            transition: all 0.3s ease;
-            transform: scale(1);
-        }
+    /* ── Контакты ── */
+    .контакты-сетка { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+    .контакт-карточка { padding: 1.4rem; display: flex; align-items: center; gap: 1rem; }
+    .контакт-карточка strong { display: block; font-size: .9rem; margin-bottom: .15rem; }
+    .контакт-карточка span   { font-size: .8rem; color: var(--цвет-приглушен); }
 
-        .button:hover {
-            transform: scale(1.05);
-            background-color: #ffffff;
-            color: #1a1a1a;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
+    /* ── Прогресс просмотра разделов ── */
+    .прогресс-бар {
+        position: fixed; top: 0; left: 0; z-index: 500;
+        height: 2px; background: linear-gradient(90deg, var(--цвет-акцент), var(--цвет-тёплый));
+        width: 0; transition: width .1s linear;
+    }
 
-        /* Background Pattern */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 70%),
-                        radial-gradient(circle at 70% 70%, rgba(154, 123, 79, 0.1) 0%, transparent 70%);
-            opacity: 0.3;
-            z-index: -1;
-        }
-
-        body::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1' fill='%233b82f6' fill-opacity='0.2'/%3E%3C/svg%3E");
-            background-repeat: repeat;
-            opacity: 0.2;
-            z-index: -1;
-        }
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
 
-    <!-- Main Content -->
-    <div class="text-center flex flex-col items-center justify-center min-h-screen px-4">
-        <img src="/images/n4v.svg" alt="N4V Logo" class="max-w-[300px] w-full mb-1 fade-in" id="logo">
-        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 heading-font fade-in">
-            Назым <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#3b82f6] to-[#9A7B4F]">Бавбеков</span>
+<!-- Прогресс прокрутки -->
+<div class="прогресс-бар" id="прогресс"></div>
+
+<!-- Курсоры -->
+<div id="курсор"></div>
+<div id="курсор-кольцо"></div>
+
+
+<!-- ═══ Герой ═══════════════════════════════════════════ -->
+<section class="герой секция блок-герой">
+    <div class="фон-сетка"></div>
+    <div class="фон-свечение"></div>
+    <div class="контейнер герой__контент">
+        <div class="аватар появление">
+            <img src="/images/Profile.png" alt="Назым Бавбеков"
+                 onerror="this.parentNode.style.background='var(--цвет-акцент)';this.remove()">
+        </div>
+        <h1 class="герой__имя появление появление--д1">
+            Назым <span class="градиент-текст">Бавбеков</span>
         </h1>
-        <p class="text-lg md:text-xl text-gray-300 mb-12 max-w-2xl fade-in">
-            Веб-разработчик
+        <p class="герой__роль появление появление--д1">
+            Веб-разработчик · PHP / Yii2 / Laravel
         </p>
-        <div class="flex flex-col sm:flex-row gap-4 fade-in">
-            <a href="p.html" class="button px-8 py-4 bg-transparent border-2 border-white text-white font-medium rounded-full hover:bg-white hover:text-gray-900 flex items-center justify-center">
-                <i class="fas fa-briefcase mr-2"></i> Портфолио
+        <div class="стек-строка появление появление--д2">
+            <span class="тег-технология">PHP</span>
+            <span class="тег-технология">Yii2</span>
+            <span class="тег-технология">Laravel</span>
+        </div>
+        <div class="герой__кнопки появление появление--д2">
+            <a href="#проекты" class="кнопка кнопка--осн">
+                <i class="fas fa-layer-group"></i> Проекты
             </a>
-            <a href="https://t.me/nazbav" class="button px-8 py-4 bg-white text-gray-900 font-medium rounded-full hover:bg-gray-100 flex items-center justify-center">
-                <i class="fab fa-telegram mr-2"></i> Telegram
+            <a href="#обо-мне" class="кнопка кнопка--контур">
+                <i class="fas fa-user"></i> Обо мне
+            </a>
+        </div>
+        <div class="герой__контакты появление появление--д3">
+            <a href="https://t.me/nazbav" target="_blank" rel="noopener" class="герой__контакт">
+                <i class="fab fa-telegram"></i> @nazbav
+            </a>
+            <a href="mailto:naz.bav@list.ru" class="герой__контакт">
+                <i class="fas fa-envelope"></i> naz.bav@list.ru
+            </a>
+            <a href="https://github.com/nazbav" target="_blank" rel="noopener" class="герой__контакт">
+                <i class="fab fa-github"></i> github.com/nazbav
             </a>
         </div>
     </div>
+    <div class="стрелка-вниз" aria-hidden="true"><i class="fas fa-chevron-down"></i></div>
+</section>
 
-    <!-- Footer -->
-    <footer class="absolute bottom-0 w-full py-6 text-center">
-        <p class="text-gray-400 text-sm">&copy; <span id="current-year">2025</span> Назым Бавбеков. Все права защищены.</p>
-    </footer>
+<!-- ═══ Обо мне ══════════════════════════════════════════ -->
+<section id="обо-мне" class="секция bg-поверх" data-раздел="обо-мне">
+    <div class="контейнер">
+        <div class="загол-раздела появление">
+            <span class="т-метка">Обо мне</span>
+            <h2 class="t-заголовок">Кто я и <span class="градиент-текст">чем занимаюсь</span></h2>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr;gap:2.5rem;" class="появление появление--д1">
+            <div>
+                <p class="t-тело" style="margin-bottom:1rem;">
+                    Привет! Я <strong style="color:var(--цвет-текст);">Назым</strong> — веб-разработчик. Увлекаюсь 3D-печатью.
+                    Специализируюсь на бэкенде: PHP, Yii2, Laravel, WordPress — пишу серверную логику, настраиваю базы данных, деплою на прод.
+                </p>
+                <p class="t-тело" style="margin-bottom:1rem;">
+                    Делал проекты для образовательных учреждений: личные кабинеты студентов, системы
+                    дистанционного обучения на Moodle, корпоративные сайты. Параллельно разрабатывал чат-боты
+                    для ВКонтакте и Telegram, интегрировал CRM-системы.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <script>
-        // Set current year
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+<!-- ═══ Опыт ═════════════════════════════════════════════ -->
+<section id="опыт" class="секция bg-фон" data-раздел="опыт">
+    <div class="контейнер">
+        <div style="display:grid;grid-template-columns:1fr;gap:3rem;">
+            <div class="появление">
+                <span class="т-метка">Опыт работы</span>
+                <h2 class="t-заголовок">Карьерный <span class="градиент-текст">путь</span></h2>
+                <p class="sec-sub" style="margin-top:.6rem;">Проекты для образования, стартапов и собственные разработки</p>
+            </div>
+            <div class="хронология появление появление--д1">
 
-        // Custom cursor
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorOutline = document.querySelector('.cursor-outline');
+                <div class="хрон-элемент">
+                    <div class="хрон-точка"></div>
+                    <div class="хрон-период">Ноябрь 2023 — настоящее время · 2 года 4 месяца</div>
+                    <div class="хрон-должность">PHP-программист</div>
+                    <div class="хрон-организация">Индивидуальная практика / фриланс</div>
+                    <div class="хрон-описание">Разработка интеграций с внешними сервисами, техническая поддержка, работа с MySQL/Redis — схема, оптимизация, миграции.
+                        Laravel. Интеграции с телефониями. Разработка виджетов для AmoCRM. Детекция говорящего по голосу (CAM++, Resembler, ECAPA).</div>
+                </div>
 
-        window.addEventListener('mousemove', (e) => {
-            cursorDot.style.left = `${e.clientX}px`;
-            cursorDot.style.top = `${e.clientY}px`;
+                <div class="хрон-элемент">
+                    <div class="хрон-точка"></div>
+                    <div class="хрон-период">Март 2022 — Ноябрь 2023 · 1 год 9 месяцев</div>
+                    <div class="хрон-должность">Администратор веб-ресурсов</div>
+                    <div class="хрон-организация">
+                        АНПОО «Академический колледж» · АНО ДПО «Межрегиональная академия повышения квалификации» · АНО ВО «Волгоградский институт бизнеса»
+                    </div>
+                    <div class="хрон-описание">
+                        Администрирование веб-серверов (Ubuntu): DNS, почтовый сервер, мониторинг, SSL, резервное копирование, LAMP-стек, SSH.
+                        Разработка и доработка проектов на PHP, Yii2, Laravel, WordPress, Moodle, Bitrix, Bootstrap 4, LESS/SASS, MySQL, PostgreSQL, Redis.
+                        Разработка ЛК студента (Yii2, прогрессивное веб-приложение): профиль, расписание, оплата, уведомления через Telegram, ВКонтакте и веб-уведомления.
+                        Разработка системы сквозной аналитики для AmoCRM — передача UTM-меток из мессенджеров (PHP, Redis, AmoCRM API, Яндекс.Метрика API).
+                        Установка и настройка Moodle, разработка тем и расширений WordPress (включая PayKeeper). Разработка инструкций и регламентов.
+                    </div>
+                </div>
 
-            cursorOutline.style.left = `${e.clientX}px`;
-            cursorOutline.style.top = `${e.clientY}px`;
-            cursorOutline.animate({
-                left: `${e.clientX}px`,
-                top: `${e.clientY}px`
-            }, { duration: 500, fill: 'forwards' });
-        });
+            </div>
+        </div>
+    </div>
+</section>
 
-        // Cursor hover effects
-        document.querySelectorAll('a, button').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                cursorDot.style.backgroundColor = '#3b82f6';
-                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
-            });
+<!-- ═══ Навыки ════════════════════════════════════════════ -->
+<section id="навыки" class="секция bg-поверх" data-раздел="навыки">
+    <div class="контейнер">
+        <div class="загол-раздела появление">
+            <span class="т-метка">Технологии</span>
+            <h2 class="t-заголовок">Стек и <span class="градиент-текст">инструменты</span></h2>
+        </div>
+        <div class="навыки-сетка" id="навыки-сетка">
+            <!-- Генерируется JS -->
+        </div>
+    </div>
+</section>
 
-            el.addEventListener('mouseleave', () => {
-                cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursorDot.style.backgroundColor = '#9A7B4F';
-                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
-            });
-        });
+<!-- ═══ Проекты ═══════════════════════════════════════════ -->
+<section id="проекты" class="секция bg-фон" data-раздел="проекты">
+    <div class="контейнер">
+        <div class="загол-раздела появление">
+            <span class="т-метка">Портфолио</span>
+            <h2 class="t-заголовок"><span class="градиент-текст">Реализованные</span> проекты</h2>
+            <p>Нажмите на карточку — откроется подробный кейс с задачей, стеком и результатами</p>
+        </div>
+        <div class="фильтр-группа появление">
+            <button class="фильтр-кнопка актив" data-фильтр="все">Все</button>
+            <button class="фильтр-кнопка" data-фильтр="веб">Сайты</button>
+            <button class="фильтр-кнопка" data-фильтр="дизайн">Дизайн</button>
+            <button class="фильтр-кнопка" data-фильтр="бот">Боты</button>
+            <button class="фильтр-кнопка" data-фильтр="образование">Образование</button>
+        </div>
+        <div class="проекты-сетка" id="проекты-сетка"></div>
+    </div>
+</section>
 
-        // Fade-in animation on load
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.fade-in').forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('visible');
-                }, index * 200);
-            });
-        });
-    </script>
+
+
+
+<!-- ═══ Модал кейса ════════════════════════════════════════ -->
+<div class="модал-оверлей" id="модал-оверлей" role="dialog" aria-modal="true">
+    <div class="модал" id="модал" tabindex="-1">
+        <img class="модал__изображение" id="модал-изображение" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="">
+        <div class="модал__тело">
+            <button class="модал__закрыть" id="модал-закрыть" aria-label="Закрыть">✕</button>
+            <h2 style="font-size:1.2rem;font-weight:700;" id="модал-заголовок"></h2>
+            <div class="модал__теги" id="модал-теги"></div>
+            <div class="модал__раздел">Задача</div>
+            <p class="модал__текст" id="модал-задача"></p>
+            <div class="модал__раздел">Моя роль</div>
+            <p class="модал__текст" id="модал-роль"></p>
+            <div class="модал__раздел">Что сделано</div>
+            <div id="модал-результаты"></div>
+            <div class="модал__действия">
+                <a id="модал-ссылка" href="#" target="_blank" rel="noopener" class="кнопка кнопка--осн кнопка--мал">
+                    <i class="fas fa-external-link-alt"></i> Открыть проект
+                </a>
+                <button onclick="закрытьМодал()" class="кнопка кнопка--контур кнопка--мал">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+'use strict';
+
+/* ══════════════════ ДАННЫЕ ══════════════════════════════════ */
+
+const НАВЫКИ = [
+    { икона: 'fab fa-php', заголовок: 'PHP', уровень: 45, описание: 'Основной язык бэкенд-разработки',
+      теги: ['Yii2','Laravel','WordPress','Moodle'] },
+    { икона: 'fas fa-database', заголовок: 'Базы данных', уровень: 40, описание: 'Реляционные и NoSQL хранилища',
+      теги: ['MySQL','PostgreSQL','Redis','RabbitMQ','RabbitMQ RPC'] },
+    { икона: 'fab fa-react', заголовок: 'Фронтенд', уровень: 35, описание: 'Интерактивные интерфейсы',
+      теги: ['Bootstrap 5','React.js','jQuery','JavaScript','LESS/SASS'] },
+    { икона: 'fab fa-figma', заголовок: 'Figma', уровень: 37, описание: 'Проектирование интерфейсов от прототипа до макета',
+      теги: ['Прототипы','Компоненты','Виджеты'] },
+    { икона: 'fas fa-plug', заголовок: 'Интеграции', уровень: 40, описание: 'CRM, телефония и внешние сервисы',
+      теги: ['AmoCRM','Виджеты AmoCRM','Телефония','Webhook','API'] },
+    { икона: 'fas fa-microphone-lines', заголовок: 'Опыт с МО', уровень: 30, описание: 'Работа с моделями машинного обучения на реальных задачах',
+      теги: ['CAM++','ECAPA','Resembler'] },
+    { икона: 'fas fa-server', заголовок: 'Администрирование', уровень: 35, описание: 'Развёртывание и поддержка',
+      теги: ['Linux','Nginx','Docker','Git'] },
+    { икона: 'fas fa-robot', заголовок: 'Чат-боты', уровень: 42, описание: 'Мессенджер-автоматизация',
+      теги: ['Telegram Bot API','VK API','PHP SDK'] },
+];
+
+const ПРОЕКТЫ = [
+    {
+        id: '3d-price',
+        год: '2025',
+        заголовок: 'Калькулятор стоимости 3D-печати',
+        изображение: '/images/dist/3d-price.png',
+        категории: ['веб'],
+        технологии: ['Laravel','PHP','MySQL','JavaScript'],
+        ссылка: 'https://github.com/nazbav/3d-price',
+        задача: 'Разработать веб-приложение для расчёта стоимости заказов на 3D-печать — с учётом материалов, принтеров, накладных расходов, наценки и срочности.',
+        роль: 'Полный цикл: проектирование, разработка, запуск. Личный проект.',
+        результаты: [
+            'Реализовал калькулятор с параметрами: наценка, скидка, доставка, налоги, срочность',
+            'Добавил разделы: история расчётов, клиенты, принтеры, материалы, статистика',
+            'Разработал боковую панель с итогом, себестоимостью и маржой в реальном времени',
+            'Реализовал тёмную тему и адаптивный интерфейс',
+        ],
+    },
+    {
+        id: 'academicol',
+        год: '2023',
+        заголовок: 'Сайт academicol.ru',
+        изображение: '/images/dist/academicol_ru.png',
+        категории: ['веб','дизайн','образование'],
+        технологии: ['WordPress','Figma','PHP'],
+        ссылка: 'https://github.com/nazbav/n4v.ru/tree/master/images/dist/academicol',
+        задача: 'Корпоративный сайт для колледжа АНПОО «Академиколл» с нуля — дизайн в Figma, разработка темы WordPress, настройка и сдача заказчику.',
+        роль: 'Полный цикл: проектирование, дизайн, разработка, настройка хостинга и передача заказчику.',
+        результаты: [
+            'Спроектировал UI в Figma: главная, направления, новости, контакты',
+            'Разработал кастомную тему WordPress с адаптивной вёрсткой',
+            'Настроил SEO-структуру, sitemap, форму обратной связи',
+            'Сдал в срок, заказчик доволен',
+        ],
+    },
+    {
+        id: 'volbi',
+        год: '2023',
+        заголовок: 'Сайт volbi.ru',
+        изображение: '/images/dist/volbi.png',
+        категории: ['веб','образование'],
+        технологии: ['WordPress','PHP','MySQL'],
+        ссылка: 'https://volbi.ru/',
+        задача: 'Настройка и запуск сайта для АНО ВО «Волгоградский институт бизнеса» — частного вуза с 22-летней историей.',
+        роль: 'Разработчик и системный администратор: развёртывание, кастомизация, обучение сотрудников.',
+        результаты: [
+            'Настроил хостинг, развернул WordPress на сервере',
+            'Кастомизировал тему под фирменный стиль вуза',
+            'Настроил формы заявок, SEO-плагины, кэширование',
+            'Обучил контент-менеджеров работе с системой',
+        ],
+    },
+    {
+        id: 'sunduk',
+        год: '2022',
+        заголовок: 'Дизайн магазина СУНДУК',
+        изображение: '/images/dist/sndk.png',
+        категории: ['дизайн'],
+        технологии: ['Figma'],
+        ссылка: 'https://www.figma.com/proto/q4bqYW77mJ32OrObaHI3zQ/sunduk?page-id=0%3A1&node-id=2%3A4',
+        задача: 'Разработать дизайн интернет-магазина «СУНДУК» — главная, каталог, карточка товара, корзина.',
+        роль: 'Дизайнер интерфейсов: исследование, прототипирование, финальный макет.',
+        результаты: [
+            'Создал компонентную систему в Figma (кнопки, карточки, навбар)',
+            'Проработал UX: фильтры каталога, быстрый просмотр товара',
+            'Подготовил кликабельный прототип для презентации',
+            'Адаптировал экраны под desktop и мобильный',
+        ],
+    },
+    {
+        id: 'mapk',
+        год: '2022',
+        заголовок: 'ЛК слушателей МАПК',
+        изображение: '/images/dist/mapk.png',
+        категории: ['дизайн','веб','образование'],
+        технологии: ['Figma','Moodle','PHP','CSS'],
+        ссылка: 'https://www.figma.com/file/OEMPrk3S862AgvwnRP90N7/lk.mapk34.ru?node-id=0%3A1',
+        задача: 'Личный кабинет слушателей АНО ДПО «Межрегиональная академия повышения квалификации» на базе Moodle — дизайн в Figma, кастомная тема.',
+        роль: 'Дизайнер и разработчик: от макета в Figma до готовой кастомной темы Moodle.',
+        результаты: [
+            'Спроектировал UI в Figma: дашборд, курсы, сертификаты, профиль',
+            'Разработал кастомную тему Moodle под утверждённый макет (PHP + CSS)',
+            'Адаптировал интерфейс для мобильных устройств',
+            'Настроил среду для дистанционного обучения, олимпиад и тестирований',
+        ],
+    },
+    {
+        id: 'lk-academicol',
+        год: '2021',
+        заголовок: 'Личный кабинет студента',
+        изображение: '/images/dist/lk_academicol_ru.png',
+        категории: ['веб','дизайн','образование'],
+        технологии: ['Yii2','Figma','MySQL','Bootstrap'],
+        ссылка: 'https://academicol.github.io/lk/',
+        задача: 'Разработать личный кабинет студента для АНПОО «Академиколл» — расписание, оценки, документы, новости.',
+        роль: 'Полный стек: Figma → Yii2 → продакшн.',
+        результаты: [
+            'Разработал клиентскую и серверную части на Yii2',
+            'Создал ролевую модель: студент, преподаватель, администратор',
+            'Написал интеграцию с базой Moodle для синхронизации курсов',
+            'Разработал дизайн всех экранов в Figma до начала вёрстки',
+        ],
+    },
+    {
+        id: 'sdo-academicol',
+        год: '2021',
+        заголовок: 'Дизайн главной СДО АНПОО АК',
+        изображение: '/images/dist/sdo_academicol_ru.png',
+        категории: ['дизайн','образование'],
+        технологии: ['Figma','Moodle','CSS'],
+        ссылка: 'https://sdo.academicol.ru/',
+        задача: 'Разработать кастомный дизайн главной страницы системы дистанционного обучения на Moodle.',
+        роль: 'Дизайнер и разработчик темы Moodle.',
+        результаты: [
+            'Создал современный дизайн-макет в Figma',
+            'Разработал кастомную тему Moodle с нуля (PHP + CSS)',
+            'Добавил анимации и эффекты для улучшения восприятия',
+            'Оптимизировал отображение на мобильных устройствах',
+        ],
+    },
+    {
+        id: 'fpic-bot',
+        год: '2021',
+        заголовок: 'Бот расписания ФПИК',
+        изображение: '/images/dist/fpic_notify_bot.png',
+        категории: ['бот'],
+        технологии: ['PHP','Telegram Bot API','MySQL'],
+        ссылка: 'https://t.me/fpic_notify_bot',
+        задача: 'Telegram-бот для автоматической рассылки расписания занятий студентам и преподавателям колледжа.',
+        роль: 'PHP-разработчик: проектирование и полная реализация.',
+        результаты: [
+            'Написал бота на PHP с использованием Telegram Bot API',
+            'Реализовал парсинг расписания из внешнего источника',
+            'Добавил систему подписок: группа или преподаватель',
+            'Настроил планировщик задач для автоматической рассылки',
+        ],
+    },
+    {
+        id: 'kvant',
+        год: '2020',
+        заголовок: 'Боты сообщества КВАНТ',
+        изображение: '/images/dist/kvant.png',
+        категории: ['бот'],
+        технологии: ['PHP','VK API','MySQL'],
+        ссылка: 'https://m.vk.com/studkvant',
+        задача: 'Чат-боты для студенческого VK-сообщества «КВАНТ»: расписание, новости, FAQ и управление событиями.',
+        роль: 'PHP-разработчик: полная реализация и поддержка.',
+        результаты: [
+            'Написал несколько ботов на PHP с VK Callback API',
+            'Реализовал меню команд и ответы на частые вопросы',
+            'Добавил модерацию обращений и статистику',
+            'Интегрировал уведомления о событиях сообщества',
+        ],
+    },
+    {
+        id: 'volbi-eios',
+        год: '2020',
+        заголовок: 'ЭИОС Волгоградского института бизнеса',
+        изображение: '/images/dist/e-new.volbi.ru.png',
+        категории: ['дизайн','образование'],
+        технологии: ['Figma','Moodle','CSS'],
+        ссылка: 'http://e-new.volbi.ru/',
+        задача: 'Дизайн и разработка электронной информационно-образовательной среды Волгоградского института бизнеса.',
+        роль: 'Дизайнер и разработчик темы Moodle.',
+        результаты: [
+            'Разработал UI в Figma, согласовал с заказчиком',
+            'Создал кастомную тему Moodle под фирменный стиль ВИБ',
+            'Реализовал адаптивную вёрстку для всех устройств',
+            'Оптимизировал загрузку за счёт минификации ресурсов',
+        ],
+    },
+    {
+        id: 'sapper',
+        год: '2019',
+        заголовок: 'Игра «Сапёр» во ВКонтакте',
+        изображение: '/images/dist/sapper.png',
+        категории: ['бот'],
+        технологии: ['PHP','VK API'],
+        ссылка: 'https://github.com/nazbav/botsapper',
+        задача: 'Реализовать классическую игру «Сапёр» прямо в диалоге ВКонтакте через inline-клавиатуру.',
+        роль: 'Разработчик: игровая логика и интеграция с VK API.',
+        результаты: [
+            'Написал игровую логику «Сапёра» на PHP',
+            'Отрисовал поле через эмодзи и inline-кнопки VK',
+            'Реализовал три уровня сложности',
+            'Опубликовал исходный код на GitHub с документацией',
+        ],
+    },
+    {
+        id: 'vkcoin',
+        год: '2019',
+        заголовок: 'PHP SDK для VK Coin',
+        изображение: '/images/dist/vkcoinlib.png',
+        категории: ['бот'],
+        технологии: ['PHP','VK Coin API','GitHub'],
+        ссылка: 'https://github.com/nazbav/vk-coin-api',
+        задача: 'Написать PHP SDK для VK Coin — внутренней валюты ВКонтакте — чтобы упростить разработку монетизированных ботов.',
+        роль: 'Автор и мейнтейнер библиотеки с открытым исходным кодом.',
+        результаты: [
+            'Разработал библиотеку с поддержкой всех методов VK Coin API',
+            'Реализовал очередь транзакций через WebSocket',
+            'Написал документацию и примеры использования',
+            'Опубликовал на GitHub, получил звёзды от разработчиков',
+        ],
+    },
+    {
+        id: 'bot2018',
+        год: '2018',
+        заголовок: 'Шаблон чат-ботов ВКонтакте',
+        изображение: '/images/dist/bot2018.png',
+        категории: ['бот'],
+        технологии: ['PHP','VK API'],
+        ссылка: 'https://github.com/nazbav/bot2018',
+        задача: 'Создать переиспользуемый шаблон для быстрой разработки чат-ботов ВКонтакте на PHP.',
+        роль: 'Разработчик фреймворка с открытым кодом.',
+        результаты: [
+            'Разработал базовую архитектуру бота (Callback API + Long Poll)',
+            'Реализовал маршрутизацию команд, промежуточный слой, обработку событий',
+            'Добавил утилиты: сообщения, изображения, клавиатуры',
+            'Опубликовал с подробным README на GitHub',
+        ],
+    },
+    {
+        id: 'konk',
+        год: '2018',
+        заголовок: 'Сайт для конкурса',
+        изображение: '/images/dist/personalsite.png',
+        категории: ['веб','дизайн'],
+        технологии: ['HTML','CSS','JavaScript'],
+        ссылка: 'https://nazbav.github.io/konk/',
+        задача: 'Разработать персональный сайт-визитку для участия в конкурсе молодых веб-разработчиков.',
+        роль: 'Разработчик и дизайнер: концепция, дизайн, верстка.',
+        результаты: [
+            'Сверстал адаптивный одностраничный сайт без фреймворков',
+            'Реализовал CSS-анимации и плавные переходы',
+            'Оптимизировал производительность загрузки',
+            'Задеплоил на GitHub Pages',
+        ],
+    },
+];
+
+
+/* ══════════════════ НАВЫКИ ════════════════════════════════════ */
+function отрисоватьНавыки() {
+    const сетка = document.getElementById('навыки-сетка');
+    сетка.innerHTML = НАВЫКИ.map((н, i) => `
+        <div class="карточка карточка--ховер навык-карточка появление${i % 3 === 1 ? ' появление--д1' : i % 3 === 2 ? ' появление--д2' : ''}">
+            <div class="навык-карточка__шапка">
+                <div class="икон-бокс"><i class="${н.икона}"></i></div>
+                <h3>${н.заголовок}</h3>
+            </div>
+            <div class="навык-карточка__суб">${н.описание}</div>
+            <div class="навык-теги">${н.теги.map(t => `<span>${t}</span>`).join('')}</div>
+        </div>`).join('');
+}
+
+/* ══════════════════ ПРОЕКТЫ ════════════════════════════════════ */
+function отрисоватьПроекты(фильтр) {
+    const список = фильтр === 'все' ? ПРОЕКТЫ : ПРОЕКТЫ.filter(п => п.категории.includes(фильтр));
+    const сетка = document.getElementById('проекты-сетка');
+    сетка.innerHTML = список.map((п, i) => `
+        <div class="карточка карточка--ховер карточка--ссылка проект-карточка появление${i%3===1?' появление--д1':i%3===2?' появление--д2':''}"
+             data-id="${п.id}" role="button" tabindex="0" aria-label="Открыть кейс: ${п.заголовок}">
+            <div class="проект-превью">
+                <img src="${п.изображение}" alt="${п.заголовок}" loading="lazy">
+                <div class="проект-затемн"></div>
+            </div>
+            <div class="проект-тело">
+                <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.3rem;">
+                    ${п.технологии.slice(0,2).map(t=>`<span class="тег-технология">${t}</span>`).join('')}
+                    ${п.год ? `<span class="тег-технология">${п.год}</span>` : ''}
+                </div>
+                <h3>${п.заголовок}</h3>
+                <div class="проект-мета">
+                    <span class="проект-стрелка">Подробнее <i class="fas fa-arrow-right" style="font-size:.65rem"></i></span>
+                </div>
+            </div>
+        </div>`).join('');
+
+    сетка.querySelectorAll('.проект-карточка').forEach(карточка => {
+        const открыть = () => открытьМодал(карточка.dataset.id);
+        карточка.addEventListener('click', открыть);
+        карточка.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') открыть(); });
+    });
+    повторноНаблюдать();
+}
+
+/* ══════════════════ МОДАЛ ══════════════════════════════════════ */
+function открытьМодал(id) {
+    const п = ПРОЕКТЫ.find(x => x.id === id);
+    if (!п) return;
+    document.getElementById('модал-заголовок').textContent = п.заголовок;
+    document.getElementById('модал-изображение').src = п.изображение;
+    document.getElementById('модал-изображение').alt = п.заголовок;
+    document.getElementById('модал-теги').innerHTML = п.технологии.map(t=>`<span class="тег-технология">${t}</span>`).join('');
+    document.getElementById('модал-задача').textContent = п.задача;
+    document.getElementById('модал-роль').textContent   = п.роль;
+    document.getElementById('модал-результаты').innerHTML = п.результаты.map(р=>`
+        <div class="результат-строка"><i class="fas fa-check-circle"></i><span>${р}</span></div>`).join('');
+    document.getElementById('модал-ссылка').href = п.ссылка;
+    document.getElementById('модал-оверлей').classList.add('открыто');
+    document.getElementById('модал').focus();
+    document.body.style.overflow = 'hidden';
+}
+
+function закрытьМодал() {
+    document.getElementById('модал-оверлей').classList.remove('открыто');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('модал-закрыть').addEventListener('click', закрытьМодал);
+document.getElementById('модал-оверлей').addEventListener('click', e => { if (e.target === e.currentTarget) закрытьМодал(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') закрытьМодал(); });
+
+/* ══════════════════ ФИЛЬТРЫ ПРОЕКТОВ ══════════════════════════ */
+document.querySelectorAll('.фильтр-кнопка').forEach(кнопка => {
+    кнопка.addEventListener('click', () => {
+        document.querySelectorAll('.фильтр-кнопка').forEach(к => к.classList.remove('актив'));
+        кнопка.classList.add('актив');
+        отрисоватьПроекты(кнопка.dataset.фильтр);
+    });
+});
+
+/* ══════════════════ ПРОКРУТКА И НАБЛЮДАТЕЛИ ═══════════════════ */
+const наблюдатель = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('видно'); наблюдатель.unobserve(e.target); } });
+}, { threshold: .07 });
+
+function повторноНаблюдать() {
+    document.querySelectorAll('.появление:not(.видно)').forEach(el => наблюдатель.observe(el));
+}
+
+// Прогресс-бар прокрутки
+window.addEventListener('scroll', () => {
+    const прогресс = document.getElementById('прогресс');
+    const высота = document.documentElement.scrollHeight - window.innerHeight;
+    прогресс.style.width = (window.scrollY / высота * 100) + '%';
+}, { passive: true });
+
+// Наблюдатель разделов для подсветки навигации
+const наблюдРазделов = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            const раздел = e.target.dataset.раздел;
+            if (раздел) {
+                const навСсылки = document.querySelectorAll('.нав__ссылки a');
+                навСсылки.forEach(с => с.classList.toggle('текущий', с.getAttribute('href') === '#' + раздел));
+            }
+        }
+    });
+}, { threshold: .25 });
+document.querySelectorAll('[data-раздел]').forEach(el => наблюдРазделов.observe(el));
+
+
+
+/* ══════════════════ КУРСОР ════════════════════════════════════ */
+const кур = document.getElementById('курсор');
+const кольцо = document.getElementById('курсор-кольцо');
+if (кур && кольцо) {
+    let мх = 0, мy = 0, рх = 0, рy = 0;
+    window.addEventListener('mousemove', e => {
+        мх = e.clientX; мy = e.clientY;
+        кур.style.left = мх + 'px'; кур.style.top = мy + 'px';
+    });
+    (function loop() {
+        рх += (мх - рх) * .14; рy += (мy - рy) * .14;
+        кольцо.style.left = рх + 'px'; кольцо.style.top = рy + 'px';
+        requestAnimationFrame(loop);
+    })();
+    const расширить = () => { кольцо.style.width = '46px'; кольцо.style.height = '46px'; кольцо.style.borderColor = 'rgba(245,158,11,.7)'; };
+    const сузить   = () => { кольцо.style.width = '30px'; кольцо.style.height = '30px'; кольцо.style.borderColor = 'rgba(99,102,241,.5)'; };
+    document.addEventListener('mouseover', e => { if (e.target.closest('a,button,.проект-карточка,.карточка--ховер')) расширить(); else сузить(); });
+}
+
+/* ══════════════════ ПЛАВНЫЙ СКРОЛЛ ════════════════════════════ */
+document.querySelectorAll('a[href^="#"]').forEach(а => {
+    а.addEventListener('click', e => {
+        const цель = document.querySelector(а.getAttribute('href'));
+        if (цель) { e.preventDefault(); цель.scrollIntoView({ behavior: 'smooth' }); }
+    });
+});
+
+/* ══════════════════ ИНИЦИАЛИЗАЦИЯ ═════════════════════════════ */
+отрисоватьНавыки();
+отрисоватьПроекты('все');
+повторноНаблюдать();
+</script>
+
 </body>
 </html>
